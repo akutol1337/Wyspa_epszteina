@@ -1,0 +1,141 @@
+import random
+import tkinter as tk
+from PIL import Image, ImageTk
+
+
+class GraWKosciApp:
+
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Egzamin - Gra w Kości")
+        self.root.geometry("400x600")
+
+        # Kolory z treści zadania (kod szesnastkowy z usuniętym ARGB alpha channel na początku, czyli ED)
+        self.kolor_tla = "#27C121"
+        self.kolor_przycisku = "#275021"
+
+        self.root.configure(bg=self.kolor_tla)
+
+        # Logika gry: 5 kości
+        # Każda kość to słownik: wartość (0-6) oraz status dostępności (True/False)
+        self.kosci = [{"wartosc": 0, "dostepna": True} for _ in range(5)]
+
+        # Słownik na oryginalne obiekty Image z Pillow (żeby móc je modyfikować w locie)
+        self.oryginalne_obrazy = {}
+        self.wczytaj_obrazy()
+
+        # Budowanie interfejsu
+        self.stworz_interfejs()
+        self.odswiez_widok_kosci()
+
+    def wczytaj_obrazy(self):
+        # Wczytujemy kosc0.png do kosc6.png
+        for i in range(7):
+            try:
+                # Otwieramy obrazek i konwertujemy do RGBA w celu obsługi przezroczystości
+                img = Image.open(f"kosc{i}.png").convert("RGBA")
+                # Zmiana rozmiaru, aby pasowały do układu (np. 70x70 pikseli)
+                img = img.resize((70, 70), Image.Resampling.LANCZOS)
+                self.oryginalne_obrazy[i] = img
+            except FileNotFoundError:
+                # Awaryjny generator czystych kwadratów, jeśli nie masz jeszcze plików .png
+                img = Image.new("RGBA", (70, 70), "white")
+                self.oryginalne_obrazy[i] = img
+
+    def stworz_interfejs(self):
+        # Główny kontener na kości (odpowiednik GridLayout/LinearLayout)
+        self.kontener_kosci = tk.Frame(self.root, bg=self.kolor_tla)
+        self.kontener_kosci.pack(pady=40)
+
+        # Układ kości: 3 na górze, 2 na dole (zgodnie z Obrazem 2 i 3 z egzaminu)
+        self.labels_kosci = []
+
+        # Górny rząd (3 kości)
+        for i in range(3):
+            lbl = tk.Label(self.kontener_kosci, bg=self.kolor_tla, bd=0)
+            lbl.grid(row=0, column=i, padx=10, pady=10)
+            # Bind pod kliknięcie myszką (odpowiednik OnClickListener)
+            lbl.bind("<Button-1>", lambda event, idx=i: self.klikniecie_kosci(idx))
+            self.labels_kosci.append(lbl)
+
+        # Dolny rząd (2 kości)
+        for i in range(3, 5):
+            lbl = tk.Label(self.kontener_kosci, bg=self.kolor_tla, bd=0)
+            # Kolumny 0 i 1 przesunięte nieco do środka wizualnie lub po prostu grid
+            lbl.grid(row=1, column=i - 3, padx=10, pady=10, columnspan=2 if i == 4 else 1)
+            lbl.bind("<Button-1>", lambda event, idx=i: self.klikniecie_kosci(idx))
+            self.labels_kosci.append(lbl)
+
+        # Specjalne wyrównanie dla dolnego rzędu, żeby były ładnie wyśrodkowane
+        self.kontener_kosci.grid_columnconfigure(0, weight=1)
+        self.kontener_kosci.grid_columnconfigure(1, weight=1)
+        self.kontener_kosci.grid_columnconfigure(2, weight=1)
+
+        # Przycisk RZUT
+        self.btn_rzut = tk.Button(
+            self.root,
+            text="RZUT",
+            font=("Arial", 14, "bold"),
+            bg=self.kolor_przycisku,
+            fg="white",
+            activebackground=self.kolor_przycisku,
+            activeforeground="white",
+            padx=20,
+            pady=5,
+            command=self.wykonaj_rzut,
+        )
+        self.btn_rzut.pack(pady=20)
+
+        # Pole tekstowe z wynikiem (czcionka rozmiar 40 zgodnie z zaleceniami)
+        self.lbl_wynik = tk.Label(
+            self.root,
+            text="0",
+            font=("Arial", 40, "bold"),
+            bg=self.kolor_tla,
+            fg="black",
+        )
+        self.lbl_wynik.pack(pady=10)
+
+    def odswiez_widok_kosci(self):
+        # Lista referencji do obiektów ImageTk, aby garbage collector ich nie usunął
+        self.tk_images = []
+
+        for i, kosc in enumerate(self.kosci):
+            wartosc = kosc["wartosc"]
+            img = self.oryginalne_obrazy[wartosc].copy()
+
+            # Jeśli kość jest niedostępna, nakładamy efekt 50% przezroczystości (alfa)
+            if not kosc["dostepna"]:
+                alpha = img.split()[3]
+                alpha = alpha.point(lambda p: int(p * 0.5))
+                img.putalpha(alpha)
+
+            tk_img = ImageTk.PhotoImage(img)
+            self.tk_images.append(tk_img)
+
+            # Aktualizacja widgetu Label
+            self.labels_kosci[i].configure(image=tk_img)
+
+    def wykonaj_rzut(self):
+        # Losowanie dla dostępnych kości
+        for kosc in self.kosci:
+            if kosc["dostepna"]:
+                kosc["wartosc"] = random.randint(1, 6)
+
+        # Liczenie sumy oczek
+        suma = sum(kosc["wartosc"] for kosc in self.kosci)
+
+        # Aktualizacja widoku
+        self.odswiez_widok_kosci()
+        self.lbl_wynik.configure(text=str(suma))
+
+    def klikniecie_kosci(self, idx):
+        # Zmiana stanu dostępności po kliknięciu
+        self.kosci[idx]["dostepna"] = not self.kosci[idx]["dostepna"]
+        self.odswiez_widok_kosci()
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = GraWKosciApp(root)
+    root.mainloop()
