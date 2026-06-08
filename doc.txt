@@ -1,0 +1,3 @@
+Nazwa systemu operacyjnego: Windows 11 Professional
+Nazwy środowisk programistycznych: IDLE (Python), Visual Studio Code
+Nazwy języków programowania: Python 3.12
