@@ -1,0 +1,4 @@
+Dokumentacja narzędzi wykorzystanych na egzaminie:
+1. Nazwa systemu operacyjnego: Windows 11 Home / Professional
+2. Nazwy środowisk programistycznych: Visual Studio Code / IDLE Python
+3. Nazwa języka programowania: Python 3.11 (lub inna wersja zainstalowana na stanowisku)
