@@ -1,0 +1,28 @@
+import org.firstopp.www.classes.Address;
+import org.firstopp.www.classes.Person;
+import org.firstopp.www.interfaces.IShowInfoAbout;
+
+public class Main {
+    public static void main(String[] args) {
+        // Tworzymy adres przy użyciu konstruktora bezargumentowego i setterów
+        Address addressOfFirstPerson = new Address();
+        addressOfFirstPerson.setMyCity("Warszawa");
+        addressOfFirstPerson.setMyStreetName("Marszałkowska");
+        addressOfFirstPerson.setMyBuildingNumber(10);
+        addressOfFirstPerson.setMyHomeNumber(5);
+        addressOfFirstPerson.setMyPostCode("00-001");
+
+        // Tworzymy osobę przypisując ją do interfejsu
+        Person person = new Person();
+        person.setFirstName("Jan");
+        person.setLastName("Kowalski");
+        person.setMyAge(25);
+        person.setMyGender('M');
+        person.setAddress(addressOfFirstPerson);
+
+        IShowInfoAbout myFirstObject = person;
+
+        // Wywołanie metody
+        myFirstObject.showInfo();
+    }
+}
