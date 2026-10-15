@@ -1,0 +1,27 @@
+<p>contact works!</p>
+<section class="kontakt">
+  <h1>Kontakt</h1>
+  <h2>{{ dane.nazwa }}</h2>
+
+  <p>
+    Telefon:
+    <a [href]="'tel:' + dane.telefon">
+      {{ dane.telefon }}
+    </a>
+  </p>
+
+  <p>
+    E-mail:
+    <a [href]="'mailto:' + dane.email">
+      {{ dane.email }}
+    </a>
+  </p>
+
+  <button (click)="przelaczInformacje()">
+    {{ pokazInformacje ? 'Ukryj godziny' : 'Pokaż godziny' }}
+  </button>
+
+  @if (pokazInformacje) {
+    <p>Godziny pracy: {{ dane.godziny }}</p>
+  }
+</section>
