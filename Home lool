@@ -1,0 +1,15 @@
+<p>home works!</p>
+<section class="hero">
+  <h1>{{ tytul }}</h1>
+  <p>{{ opis }}</p>
+  <a routerLink="/kontakt">Skontaktuj się z nami</a>
+</section>
+
+<section class="karty">
+  @for (sekcja of sekcje; track sekcja.tytul) {
+    <article class="karta">
+      <h2>{{ sekcja.tytul }}</h2>
+      <p>{{ sekcja.opis }}</p>
+    </article>
+  }
+</section>
