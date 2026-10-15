@@ -1,0 +1,18 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  imports: [],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HomeComponent {
+  tytul = 'Witamy na naszej stronie';
+  opis = 'Poznaj naszą ofertę i dowiedz się więcej o naszej działalności.';
+
+  sekcje = [
+    { tytul: 'Nasza oferta', opis: 'Poznaj dostępne usługi.' },
+    { tytul: 'Lokalizacja', opis: 'Sprawdź, gdzie nas znaleźć.' },
+    { tytul: 'Kontakt', opis: 'Skontaktuj się z naszym zespołem.' }
+  ];
+}
