@@ -1,0 +1,27 @@
+<p>location works!</p>
+
+<section>
+  <h1>Gdzie nas znaleźć?</h1>
+
+  <div class="adres">
+    <h2>Adres</h2>
+    <p>{{ adres.ulica }}</p>
+    <p>{{ adres.kod }} {{ adres.miasto }}</p>
+
+    <a [href]="mapaUrl" target="_blank"
+       rel="noopener noreferrer">
+      Otwórz mapę
+    </a>
+  </div>
+
+  <div class="godziny">
+    <h2>Godziny otwarcia</h2>
+
+    @for (pozycja of godziny; track pozycja.dzien) {
+      <p>
+        <strong>{{ pozycja.dzien }}:</strong>
+        {{ pozycja.czas }}
+      </p>
+    }
+  </div>
+</section>
