@@ -1,0 +1,23 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-location',
+  imports: [],
+  templateUrl: './location.component.html',
+  styleUrl: './location.component.css'
+})
+export class LocationComponent {
+  adres = {
+    miasto: 'Olsztyn',
+    ulica: 'Przykładowa 10',
+    kod: '10-001'
+  };
+
+  godziny = [
+    { dzien: 'Poniedziałek - Piątek', czas: '08:00-16:00' },
+    { dzien: 'Sobota', czas: '09:00-13:00' },
+    { dzien: 'Niedziela', czas: 'Nieczynne' }
+  ];
+
+  mapaUrl = 'https://www.google.com/maps/search/?api=1&query=Olsztyn';
+}
