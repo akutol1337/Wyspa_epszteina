@@ -1,0 +1,45 @@
+package org.firstopp.www.classes;
+
+import org.firstopp.www.interfaces.IShowInfoAbout;
+
+public class Person implements IShowInfoAbout {
+    private String firstName;
+    private String lastName;
+    private int myAge;
+    private char myGender;
+    private Address address;
+
+    // 1. Konstruktor bezargumentowy
+    public Person() {
+    }
+
+    // 2. Pełny konstruktor inicjalizujący podstawowe dane
+    public Person(String firstName, String lastName, int myAge, char myGender, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.myAge = myAge;
+        this.myGender = myGender;
+        this.address = address;
+    }
+
+    // Gettery i Settery
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getFirstName() { return firstName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getLastName() { return lastName; }
+
+    public void setMyAge(int myAge) { this.myAge = myAge; }
+    public int getMyAge() { return myAge; }
+
+    public void setMyGender(char myGender) { this.myGender = myGender; }
+    public char getMyGender() { return myGender; }
+
+    public void setAddress(Address address) { this.address = address; }
+    public Address getAddress() { return address; }
+
+    @Override
+    public void showInfo() {
+        System.out.println("Hi my name is " + this.firstName + " " + this.lastName);
+    }
+}
