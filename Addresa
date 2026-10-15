@@ -1,0 +1,38 @@
+package org.firstopp.www.classes;
+
+public class Address {
+    private String myCity;
+    private String myStreetName;
+    private int myBuildingNumber;
+    private int myHomeNumber;
+    private String myPostCode;
+
+    // 1. Konstruktor bezargumentowy
+    public Address() {
+    }
+
+    // 2. Pełny konstruktor ze wszystkimi polami
+    public Address(String myCity, String myStreetName, int myBuildingNumber, int myHomeNumber, String myPostCode) {
+        this.myCity = myCity;
+        this.myStreetName = myStreetName;
+        this.myBuildingNumber = myBuildingNumber;
+        this.myHomeNumber = myHomeNumber;
+        this.myPostCode = myPostCode;
+    }
+
+    // Gettery i Settery
+    public void setMyCity(String myCity) { this.myCity = myCity; }
+    public String getMyCity() { return myCity; }
+
+    public void setMyStreetName(String myStreetName) { this.myStreetName = myStreetName; }
+    public String getMyStreetName() { return myStreetName; }
+
+    public void setMyBuildingNumber(int myBuildingNumber) { this.myBuildingNumber = myBuildingNumber; }
+    public int getMyBuildingNumber() { return myBuildingNumber; }
+
+    public void setMyHomeNumber(int myHomeNumber) { this.myHomeNumber = myHomeNumber; }
+    public int getMyHomeNumber() { return myHomeNumber; }
+
+    public void setMyPostCode(String myPostCode) { this.myPostCode = myPostCode; }
+    public String getMyPostCode() { return myPostCode; }
+}
